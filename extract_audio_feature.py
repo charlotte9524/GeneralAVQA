@@ -1,4 +1,3 @@
-
 import numpy as np
 import librosa
 import librosa.display
@@ -28,16 +27,11 @@ def creat_features(raw_sig, sr, standardize=False):
     assert (chromagram.shape == chroma_cq.shape == mfcc_.shape == gfcc_.shape)
     return np.dstack((chromagram, chroma_cq, mfcc_, gfcc_))
 
-def generate_multi_channel(file_name, frame_len=0.75, frame_overlap=0.5, augmentation=False): #0.5
+def generate_multi_channel(file_name, length=8, frame_len=0.75, frame_overlap=0.5, augmentation=False): 
     features = []
-    # generate features 2D
-    # sound = AudioFileClip(os.path.join(args.videos_dir, vName))
-    # sr = sound.fps
-    # y = sound.to_soundarray()
-    # y = np.mean(y, axis=1)
-    y, sr = librosa.load(file_name, sr=None) #44100
-    frame_len =int(np.floor(len(y)/8*frame_len)) # int(np.floor(frame_len * sr))
-    frame_overlap = int(np.ceil(len(y)/8*frame_overlap)) # int(frame_overlap * sr)
+    y, sr = librosa.load(file_name, sr=None) 
+    frame_len =int(np.floor(len(y)/length*frame_len)) 
+    frame_overlap = int(np.ceil(len(y)/length*frame_overlap)) 
     if augmentation is True:
         y_noise = y + 0.009 * np.random.normal(0, 1, len(y))
         y_roll = np.roll(y, int(sr / 10))
@@ -63,14 +57,8 @@ def generate_multi_channel(file_name, frame_len=0.75, frame_overlap=0.5, augment
                 y_tmp = y[i: i + frame_len]
                 fea = creat_features(y_tmp, sr)
                 features.append(fea)
-    return features  # 690 128 4
+    return features 
 
-def generate_fullaudio_channel(file_name, augmentation=False):
-    # generate features 2D
-    y, sr = librosa.load(file_name, sr=None)
-    fea = creat_features(y, sr)
-
-    return fea  # 690 128 4
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Extracting Video Spatial Features using model-based transfer learning')
@@ -92,6 +80,6 @@ if __name__ == "__main__":
 
         afeatures = np.array(afeatures)
         afeatures = np.transpose(afeatures, (0, 3, 2, 1))
-        print(afeatures.shape)
+        # print(afeatures.shape)
         np.save(os.path.join(features_dir, vName+'.npy'), afeatures)
     
