@@ -61,7 +61,7 @@ def generate_multi_channel(file_name, length=8, frame_len=0.75, frame_overlap=0.
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description='Extracting Video Spatial Features using model-based transfer learning')
+    parser = ArgumentParser(description='Extracting Audio Features')
     parser.add_argument('--features_dir', type=str, default='./features_audio/',
                         help='path to save audio features')
     parser.add_argument('--videos_dir', type=str, default='/mnt/sdb/cyq_data/Data/UGCAVQA/SJTU-UAV',
