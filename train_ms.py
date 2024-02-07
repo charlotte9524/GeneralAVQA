@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 import mindspore as ms
 from mindspore.common.tensor import Tensor
@@ -92,7 +91,7 @@ class VQADataset:
         self.mos = np.zeros((len(index), 1))
         for i in range(len(index)):
             self.features[i, :, :] = np.squeeze(np.load(os.path.join(videofeatures_dir, str(index[i]) + '.npy')))[:30, :2048]
-            self.afeatures[i, :, :, :, :] = np.load(os.path.join(audiofeatures_dir, str(index[i][:-3]+'wav') + '.npy'))[:30, :4, :, :]
+            self.afeatures[i, :, :, :, :] = np.load(os.path.join(audiofeatures_dir, index[i] + '.npy'))[:30, :4, :, :64]
             self.mos[i] = cost[i]  
         self.scale = scale  
         self.label = self.mos / self.scale  # label normalization
@@ -228,44 +227,17 @@ def compute_metrics(y_pred, y):
     RMSE = np.sqrt(mean_squared_error(y, y_pred_logistic))
     return [SRCC, KRCC, PLCC, RMSE]
 
-# def model_train(model, dataset, criterion, optimizer):
-#     # Define forward function
-#     def forward_fn(v, a, gt): #
-#         logits = model(v, a) #
-#         loss = criterion(logits, gt)
-#         return loss, logits
-    
-#     # Get gradient function
-#     grad_fn = ms.value_and_grad(forward_fn, None, optimizer.parameters, has_aux=True)
-
-#     # Define function of one-step training
-#     def train_step(v, a, gt):
-#         v = v.float()
-#         a = a.float()
-#         gt = gt.float()
-#         (loss, _), grads = grad_fn(v, a, gt) #
-#         optimizer(grads)
-#         return loss
-
-#     L = 0
-#     for i, (features, afeatures, label) in enumerate(dataset):
-#         loss = train_step(features, afeatures, label)
-#         L = L + loss.asnumpy()
-#     train_loss = L / (i + 1)
-
-#     return train_loss
-
 if __name__ == "__main__":
-    parser = ArgumentParser(description='"VSFA: Quality Assessment of In-the-Wild Videos')
-    parser.add_argument("--seed", type=int, default=19920517) #19920517
+    parser = ArgumentParser(description='"GeneralAVQA: Quality Assessment of UGC Audio-Videos')
+    parser.add_argument("--seed", type=int, default=19920517) 
     parser.add_argument('--lr', type=float, default=0.0001,
                         help='learning rate (default: 0.00001)')
     parser.add_argument('--batch_size', type=int, default=8,
                         help='input batch size for training (default: 16)')
     parser.add_argument('--epochs', type=int, default=50,
                         help='number of epochs to train (default: 2000)')
-    parser.add_argument('--model', default='2BIVQApytorch-', type=str,
-                        help='model name (default: VSFA)')
+    parser.add_argument('--model', default='GeneralAVQA-', type=str,
+                        help='model name (default: GeneralAVQA)')
     parser.add_argument('--exp_id', default=0, type=int,
                         help='exp id for train-val-test splits (default: 0)')
     parser.add_argument('--test_ratio', type=float, default=0.2,
@@ -277,7 +249,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--videofeatures_dir', type=str, default='/home/cyq/Work/UGCAVquality/GeneralAVQA/features_spatial/',
                         help='path save video features')
-    parser.add_argument('--audiofeatures_dir', type=str, default='/home/cyq/Work/UGCAVquality/Quality/2BiVQA-master/features_audio',
+    parser.add_argument('--audiofeatures_dir', type=str, default='/home/cyq/Work/UGCAVquality/GeneralAVQA/features_audio',
                         help='path save audio features')
     parser.add_argument('--videos_dir', type=str, default='/mnt/sdb/cyq_data/Data/UGCAVQA/SJTU-UAV',
                         help='path save SJTU-UAV database')
