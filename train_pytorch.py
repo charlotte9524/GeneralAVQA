@@ -393,7 +393,7 @@ if __name__ == "__main__":
             print("Val results: {}-{}, val loss={:.4f}, SROCC={:.4f}, KROCC={:.4f}, PLCC={:.4f}, RMSE={:.4f}"
                   .format(exepoch, epoch, val_loss, val_SROCC, val_KROCC, val_PLCC, val_RMSE))
             
-            # Update the model with the best val_SROCC
+            # Update the model with the best val_RMSE
             if val_RMSE < best_val_criterion:
                 # torch.save(model.state_dict(), trained_model_file)
                 print("EXP ID={}: Update best model using best_val_criterion in epoch {}".format(args.exp_id, epoch))
