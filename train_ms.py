@@ -233,9 +233,9 @@ if __name__ == "__main__":
     parser.add_argument('--lr', type=float, default=0.0001,
                         help='learning rate (default: 0.00001)')
     parser.add_argument('--batch_size', type=int, default=8,
-                        help='input batch size for training (default: 16)')
+                        help='input batch size for training (default: 8)')
     parser.add_argument('--epochs', type=int, default=50,
-                        help='number of epochs to train (default: 2000)')
+                        help='number of epochs to train (default: 50)')
     parser.add_argument('--model', default='GeneralAVQA-', type=str,
                         help='model name (default: GeneralAVQA)')
     parser.add_argument('--exp_id', default=0, type=int,
