@@ -1,7 +1,5 @@
 from argparse import ArgumentParser
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-
 import torch
 from torch.optim import Adam
 import torch.nn as nn
