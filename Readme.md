@@ -29,9 +29,12 @@ Dataset Link: http://automation.sjtu.edu.cn/en/ShowPeople.aspx?info_id=366&info_
     python extract_spatial_feature.py --features_dir=<path to save video features> --videos_dir==<SJTU-UAV database path>
     ```
 4. Train model
+   pytorch version
+    ```
+    python train_pytorch.py --videofeatures_dir=<path where save video features> --audiofeatures_dir=<path where save audio features> --videos_dir==<SJTU-UAV database path>
+    ```
+   mindscope version
     ```
     python train_ms.py --videofeatures_dir=<path where save video features> --audiofeatures_dir=<path where save audio features> --videos_dir==<SJTU-UAV database path>
     ```
-
-## To Do
-We will update the PyTorch version of our code later.
+    
