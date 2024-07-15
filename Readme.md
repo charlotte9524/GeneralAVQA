@@ -9,7 +9,7 @@ on Image Processing, 2023.
 - Y. Cao, X. Min, W. Sun, X. Zhang and G. Zhai, "Audio-Visual Quality Assessment for User Generated Content: Database and Method," IEEE International Conference on Image Processing, 2023, pp. 1495-1499.
 
 ## SJTU-UAV Dataset
-Dataset Link: http://automation.sjtu.edu.cn/en/ShowPeople.aspx?info_id=366&info_lb=326&flag=224
+Dataset Link: https://drive.google.com/drive/folders/1158ZHQsF2vVSqHquMdbBE6gLqhY2CfCe?usp=drive_link
 
 
 ## GeneralAVQA
